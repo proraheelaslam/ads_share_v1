@@ -17,7 +17,6 @@
 
     <!-- Custom styles for this template -->
     <link href="{{asset('css/backend_css/style.css')}}" rel="stylesheet">
-    <link href="{{asset('fonts/backend_fonts/style-responsive.css')}}" rel="stylesheet" />
 
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]>

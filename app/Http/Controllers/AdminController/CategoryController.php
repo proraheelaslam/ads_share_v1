@@ -4,100 +4,192 @@ namespace App\Http\Controllers\AdminController;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\File;
-use Illuminate\Support\Facades\File as LaraFile;
 use App\Category;
-use App\Product;
-use DB;
+use App\Facades\ApiResponse;
+use App;
+use App\Library\Services\CustomLogs;
+
+use DataTables;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
+
+use PhpParser\JsonDecoder;
 
 class CategoryController extends Controller
 {
-    public function viewCategories(){ 
-        $categories = category::get();
-        //return $categories = Category::with('prodects.images')->paginate(10);
 
-        //return  Product::with(['category' => function ($query) {
-            //$query->where('name', 'like', '%z%');
-        //}])->get();
 
-        return view('admin.categories.view_categories')->with(compact('categories'));
-    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {    
+        return view('admin.categories.view_categories');
     }
 
-    public function addCategory(Request $request){
+    public function getAjaxCategories(){
+            $data = Category::get();
+            return DataTables::of($data)
+                    ->addColumn('action', function($row){
+                           $btn = '<a href="'.url("admin/categories").'/'.$row->id.'/edit'.'" class="edit btn btn-primary btn-sm">Edit</a>&nbsp<button id="deleteRecord" class="edit btn btn-danger btn-sm btn-delete" data-url="'.url("admin/categories").'/'.$row->id.'">Delete</button>';
+     
+                           return $btn;
+                    })
+                    ->escapeColumns(['action'])
+                    ->make(true);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $checkboxOptions = array( 'No', 'Yes' );
+        $workingDays     = array( 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday' );
+        $categoriestitle = trans('app.AddCategories');
+        return view('admin.categories.add_category')->with(compact('checkboxOptions','workingDays','categoriestitle')); 
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
         if($request->isMethod('post')){
             $this->validate($request, [
               'name'        => 'required',
-              'description' => 'required'
+              'datepicker'  => 'required',
+              'description' => 'required',
+              'radio'       => 'required',
+              'country_id'  => 'required',
+              'workday'     => 'required',
+              'multiselectcountries' => 'required',
+              'searchableMultiSelectedCountries' => 'required',
              ]);
-            
+            //dd($request->country_id);
            $category = new Category([
                'name'        => $request->get('name'),
-               'description' => $request->get('description')
+               'date'        => $request->get('datepicker'), //strtotime($request->get('datepicker')),
+               'description' => $request->get('description'),
+               'radio'       => $request->get('radio'),
+               'country_id'  => $request->get('country_id'),
+               'checkbox'    => implode(',', $request->get('workday')),
+               'searchableMultiSelectedCountries' => implode(',', $request->get('searchableMultiSelectedCountries')),
+               'dropdown'    => implode(',', $request->get('multiselectcountries'))
+
            ]);
+           //dd($category);
            $category->save();
-           return redirect('admin/view-categories')->with('flash_message_success', 'Category has been added successfully!'); 
+           return redirect('admin/categories')->with('flash_message_success', 'Category has been added successfully!'); 
        } 
-       $categoriestitle = 'Add Categories';    
-       return view('admin.categories.add_category')->with(compact('categoriestitle')); 
     }
 
-    public function editCategory(Request $request,$id=null){
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //dd($id);
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id, CustomLogs $customLogsServiceInstance)
+    {
+        $this->custom_log = $customLogsServiceInstance->customLogsFunction();
+        $this->custom_log->info('This is a info log error!');   
+        //dd($stream);
+       
+        $checkboxOptions     = array( 'No', 'Yes' );
+        $workingDays         = array( 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday' );
+        $categoryDetails     = Category::where(['id'=>$id])->first();
+        $saveworkingDays     = $categoryDetails->checkbox;
+        $savemulticontriesids= $categoryDetails->dropdown;
+        $searchableMultiSelectedCountries = $categoryDetails->searchableMultiSelectedCountries;
         
-        if($request->isMethod('post')){
-            
-            $this->validate($request, [
+        $categoriestitle     =  trans('app.EditCategories');
+        return view('admin.categories.edit_category')->with(compact('checkboxOptions','workingDays','categoryDetails','saveworkingDays', 'savemulticontriesids', 'searchableMultiSelectedCountries', 'categoriestitle'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {   
+        //if($request->isMethod('post')){
+            //dd($request->all());
+            $request->validate([
                 'name'        => 'required',
+                'datepicker'  => 'required',
+                'radio'       => 'required',
+                'country_id'  => 'required',
+                'workday'     => 'required',
+                'multiselectcountries'    => 'required',
+                'searchableMultiSelectedCountries'    => 'required',
                 'description' => 'required'
-               ]);
-            $data = $request->all();
+            ]);
            
-            Category::where(['id'=>$id])->update(['name'=>$data['name'],'description'=>$data['description']]);
+            $data = $request->all();
+            //dd($data);
+            Category::where(['id'=>$id])->
+            update(
+                [
+                'name'        => $data['name'],
+                'date'        => $data['datepicker'],
+                'radio'       => $data['radio'],
+                'country_id'  => $data['country_id'],
+                'checkbox'    => implode(',', $data['workday']),
+                'dropdown'    => implode(',', $data['multiselectcountries']),
+                'searchableMultiSelectedCountries' => implode(',', $data['searchableMultiSelectedCountries']),
+                'description' => $data['description']
+                ]
+            );
 
-            return redirect('admin/view-categories')->with('flash_message_success', 'Category has been updated successfully');
-        }
-        
-        $categoryDetails = Category::where(['id'=>$id])->first();
-        $categoriestitle = 'Edit Categories';
-        return view('admin.categories.edit_category')->with(compact('categoryDetails', 'categoriestitle'));
+            return redirect('admin/categories')->with('flash_message_success', 'Category has been updated successfully');
+        //}
     }
 
-    public function deleteCategory($id = null){
-
-        //delete product main images related to category id:
-        // $productimages = DB::table('products')->whereIn('cat_id', array($id))->get();
-        // foreach($productimages as $productimage){
-        //     $file       = $productimage->image;
-        //     $pro_id     = $productimage->id;
-        //     $filename   = public_path('images/backend_images/product').'/'.$file;
-        //     LaraFile::delete($filename);
-        // }
-
-        //  //delete product larg images related to product id:
-        //  $proimages = DB::table('products_images')->whereIn('pro_id', array($pro_id))->get();
-        //  foreach($proimages as $proimage){
-        //      $file       = $proimage->image;
-        //      $filename   = public_path('images/backend_images/product').'/large/'.$file;
-        //      LaraFile::delete($filename);
-        //  }
-        //  //delete product medium images related to product id:
-        //  foreach($proimages as $proimage){
-        //      $file       = $proimage->image;
-        //      $filename   = public_path('images/backend_images/product').'/medium/'.$file;
-        //      LaraFile::delete($filename);
-        //  }
-        //  //delete product small images related to product id:
-        //  foreach($proimages as $proimage){
-        //      $file       = $proimage->image;
-        //      $filename   = public_path('images/backend_images/product').'/small/'.$file;
-        //      LaraFile::delete($filename);
-        //  }
-
-        //delete category:
-        //Category::where(['id'=>$id])->delete();
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
         Category::find($id)->delete();
-        return redirect()->back()->with('flash_message_success', 'Category has been deleted successfully');
+        $msg = __('Category has been deleted successfully');
+        return ApiResponse::successResponse('SUCCESS', $msg, []);
+        //return redirect()->back()->with('flash_message_success', 'Category has been deleted successfully');
     }
+
+    public function switchLang($lang)
+    {
+        App::setLocale(session()->get('locale'));
+        session()->put('locale', $lang);
+        $response = ['status' => 'success', 'code' => '200', 'message' => 'Language was switched.', 'metod' => 'GET'];
+        return $response;
+    }
+
 
 
 }

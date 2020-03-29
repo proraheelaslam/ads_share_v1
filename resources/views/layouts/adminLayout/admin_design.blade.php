@@ -9,8 +9,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{asset('images/backend_images/logo.png')}}">
-    <title>{{ config('app.name', 'BucketAdmin') }}</title>
-    
+    <title>{{ config('app.name', 'Advertisment Admin panel') }}</title>
+
     <!--Core CSS -->
     <link href="{{asset('bs3/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('js/backend_js/jquery-ui/jquery-ui-1.10.1.custom.min.css')}}" rel="stylesheet">
@@ -80,47 +80,23 @@
 <script src="{{asset('js/backend_js/jquery-ui/jquery-ui-1.10.1.custom.min.js')}}"></script>
 
 <script src="{{asset('bs3/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('js/backend_js/jquery.dcjqaccordion.2.7.js')}}"></script>
 <script src="{{asset('js/backend_js/jquery.scrollTo.min.js')}}"></script>
 <script src="{{asset('js/backend_js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js')}}"></script>
 <script src="{{asset('js/backend_js/jquery.nicescroll.js')}}"></script>
-<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
+
 <script src="{{asset('js/backend_js/skycons/skycons.js')}}"></script>
 <script src="{{asset('js/backend_js/jquery.scrollTo/jquery.scrollTo.js')}}"></script>
 <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <script src="{{asset('js/backend_js/calendar/clndr.js')}}"></script> -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
 <script src="{{asset('js/backend_js/calendar/moment-2.2.1.js')}}"></script>
-<!-- <script src="{{asset('js/backend_js/evnt.calendar.init.js')}}"></script> -->
-<script src="{{asset('js/backend_js/jvector-map/jquery-jvectormap-1.2.2.min.js')}}"></script>
-<script src="{{asset('js/backend_js/jvector-map/jquery-jvectormap-us-lcc-en.js')}}"></script>
-<script src="{{asset('js/backend_js/gauge/gauge.js')}}"></script>
-<!--clock init-->
-<script src="{{asset('js/backend_js/css3clock/js/css3clock.js')}}"></script>
-<!--Easy Pie Chart-->
-<script src="{{asset('js/backend_js/easypiechart/jquery.easypiechart.js')}}"></script>
-<!--Sparkline Chart-->
-<script src="{{asset('js/backend_js/sparkline/jquery.sparkline.js')}}"></script>
-<!--Morris Chart-->
-<script src="{{asset('js/backend_js/morris-chart/morris.js')}}"></script>
-<script src="{{asset('js/backend_js/morris-chart/raphael-min.js')}}"></script>
-<!--jQuery Flot Chart-->
-<script src="{{asset('js/backend_js/flot-chart/jquery.flot.js')}}"></script>
-<script src="{{asset('js/backend_js/flot-chart/jquery.flot.tooltip.min.js')}}"></script>
-<script src="{{asset('js/backend_js/flot-chart/jquery.flot.resize.js')}}"></script>
-<script src="{{asset('js/backend_js/flot-chart/jquery.flot.pie.resize.js')}}"></script>
-<script src="{{asset('js/backend_js/flot-chart/jquery.flot.animator.min.js')}}"></script>
-<script src="{{asset('js/backend_js/flot-chart/jquery.flot.growraf.js')}}"></script>
 
-@if(\Request::is('admin/home')) 
+@if(\Request::is('admin/home'))
 <script src="{{asset('js/backend_js/dashboard.js')}}"></script>
 @endif
-<script src="{{asset('js/backend_js/jquery.customSelect.min.js')}}" ></script>
+
 <!--common script init for all pages-->
 <script src="{{asset('js/backend_js/scripts.js')}}"></script>
-
-<!--script for this page-->
-<!-- <script src="{{asset('js/app.js')}}"></script> -->
 
 <!--dynamic table-->
 <script type="text/javascript" language="javascript" src="{{asset('js/backend_js/advanced-datatable/js/jquery.dataTables.js')}}"></script>
@@ -133,14 +109,9 @@
 <link href="{{asset('js/backend_js/datatable/bootstrap.min.css')}}" rel="stylesheet">
 <link href="{{asset('js/backend_js/datatable/dataTables.bootstrap.min.css')}}" rel="stylesheet">
 
-<!--dynamic table initialization -->
-<script src="{{asset('js/backend_js/dynamic_table_init.js')}}"></script>
-
-<!-- <script src="{{asset('js/modal_app.js')}}"></script> -->
 <script src="{{ asset('js/backend_js/my_script.js') }}"></script>
 
 <!--Multiple selct dropdown js-->
-<link rel="stylesheet" type="text/css" href="{{ asset('js/backend_js/jquery-multi-select/css/multi-select.css') }}" />
 <script type="text/javascript" src="{{ asset('js/backend_js/bootstrap-colorpicker/js/bootstrap-colorpicker.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/backend_js/bootstrap-timepicker/js/bootstrap-timepicker.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/backend_js/jquery-multi-select/js/jquery.multi-select.js') }}"></script>
@@ -148,32 +119,25 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('js/backend_js/select2/select2.min.css') }}" />
 <script src="{{asset('js/backend_js/select2/select2.min.js')}}"></script>
-<script type="text/javascript">
-    $(document).ready(
-        function () {
-            $('#singleSelected').select2();
-            $('#multipleSelected').select2();
-        }
-    );
-</script>
+
 
 <!--Datepicker js-->
 <link rel="stylesheet" type="text/css" href="{{ asset('js/backend_js/bootstrap-datetimepicker/css/datetimepicker.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('js/backend_js/bootstrap-datepicker/css/datepicker.css') }}" />
 <script type="text/javascript" src="{{ asset('js/backend_js/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/backend_js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js') }}"></script>
-<script src="{{ asset('js/backend_js/advanced-form.js') }}"></script>
 
 
-<!--Upload image CSS -->   
+
+<!--Upload image CSS -->
 <link rel="stylesheet" type="text/css" href="{{asset('js/backend_js/bootstrap-fileupload/bootstrap-fileupload.css')}}" />
 
 <!--Product Image js-->
-@if(!Request::is('admin/view_listing')) 
+@if(!Request::is('admin/view_listing'))
 <link rel="stylesheet" href="{{ asset('css/backend_css/sweetalert.css') }}" />
 <!-- <script src="{{ asset('js/backend_js/jquery.min.js') }} "></script>  -->
-<script src="{{ asset('js/backend_js/jquery.uniform.js') }} "></script>
-<script src="{{ asset('js/backend_js/jquery.validate.js') }} "></script> 
+
+<script src="{{ asset('js/backend_js/jquery.validate.js') }} "></script>
 <!--  <script src="{{ asset('js/backend_js/matrix.form_validation.js') }} "></script> -->
 <script src="{{ asset('js/backend_js/sweetalert.min.js') }}"></script>
 @endif
@@ -182,15 +146,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" integrity="sha256-3blsJd4Hli/7wCQ+bmgXfOdK7p/ZUMtPXY08jmxSSgk=" crossorigin="anonymous"></script>
 
 
-<!--Ckeditor js-->
-<script src="{{ asset('js/backend_js/ckeditor/ckeditor.js') }} "></script>
-<script type="text/javascript">
-         CKEDITOR.replace( 'description',
-         {
-          customConfig : 'config.js',
-          toolbar : 'simple'
-          })
-</script> 
 
 <!--global app configuration object -->
 <script>
