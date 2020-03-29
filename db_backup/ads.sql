@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2019 at 10:55 AM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.3.10
+-- Generation Time: Mar 29, 2020 at 04:28 PM
+-- Server version: 10.1.30-MariaDB
+-- PHP Version: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -16,10 +16,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `newprojects`
+-- Database: `ads`
 --
 
 -- --------------------------------------------------------
@@ -30,20 +30,21 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admins` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `admins`
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@admin.com', '$2y$10$/USQGDf.X.AuDkxJEMNCeesYdrzbT0wEL.Tp..zheOXD.Wjp2X2re', 'J5OL78QgH9Pqt1SzGDsqf5nQqrRtuaUYo5cywBC5mMmGO4pMdt8gSUXf1DqM', NULL, '2019-11-15 07:37:18');
+(1, 'Raheel Aslam', 'raheelaslam548@gmail.com', '$2y$10$mcl3JlW8rJxOOaFtTdMRNefsa0kajsLgMKRR5p1WudGbE6b/V844C', NULL, '2020-01-22 12:01:01', '2020-01-22 12:01:01'),
+(2, 'Raheel', 'raheelaslam1136@gmail.com', '$2y$10$GUaKtCJtZrL1b8dnqgYDYuxzVmbbjr/8H4RJz.6.rBWirp.lzmthu', NULL, '2020-03-29 03:14:11', '2020-03-29 03:14:11');
 
 -- --------------------------------------------------------
 
@@ -52,10 +53,27 @@ INSERT INTO `admins` (`id`, `name`, `email`, `password`, `remember_token`, `crea
 --
 
 CREATE TABLE `admin_password_resets` (
-  `email` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8_general_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ads`
+--
+
+CREATE TABLE `ads` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `description` longtext NOT NULL,
+  `start_time` timestamp NULL DEFAULT NULL,
+  `end_time` timestamp NULL DEFAULT NULL,
+  `duration` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -65,27 +83,15 @@ CREATE TABLE `admin_password_resets` (
 
 CREATE TABLE `categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `country_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `date` varchar(50) COLLATE utf8_general_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `radio` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `dropdown` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `searchableMultiSelectedCountries` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `checkbox` varchar(255) COLLATE utf8_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`id`, `country_id`, `name`, `date`, `description`, `created_at`, `updated_at`, `radio`, `dropdown`, `searchableMultiSelectedCountries`, `checkbox`) VALUES
-(79, 16, 'faiz', '11-07-2019', '<p>testing</p>', '2019-11-28 05:12:24', '2019-12-02 04:46:56', '1', '1,2,164', '5,6,7,8,10', 'monday,tuesday,wednesday,thursday'),
-(80, 1, '1', '12-03-2019', '<p>test</p>', '2019-11-28 07:05:40', '2019-12-02 02:39:08', '0', '2', '', 'monday,tuesday,wednesday'),
-(81, 2, 'a', '12-05-2019', '<p>aa</p>', '2019-11-28 07:22:13', '2019-12-02 02:40:08', '1', '1,2,3', '', 'tuesday,sunday'),
-(91, 164, 'United Kingdom', '12-21-2019', '<p>testing</p>', '2019-12-02 04:48:41', '2019-12-02 04:50:19', '1', '6,151,164', '1,2,3,6,151,164', 'monday,tuesday,sunday');
+  `radio` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dropdown` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `checkbox` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -95,11 +101,11 @@ INSERT INTO `categories` (`id`, `country_id`, `name`, `date`, `description`, `cr
 
 CREATE TABLE `countries` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `code` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_general_ci NOT NULL,
+  `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `countries`
@@ -352,25 +358,14 @@ INSERT INTO `countries` (`id`, `code`, `name`, `created_at`, `updated_at`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ds`
---
-
-CREATE TABLE `ds` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `migrations`
 --
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8_general_ci NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -393,22 +388,33 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (14, '2019_11_06_071539_add_name_to_news', 1),
 (15, '2019_11_08_060929_create_productsimages_table', 1),
 (16, '2019_11_12_073124_add_avatar_and_active_and_activation_token_to_users', 1),
-(17, '2019_11_28_075402_add_radio_and_dropdown_and_checkbox_to_categories', 2),
-(18, '2019_11_29_050240_create_countries_table', 3);
+(17, '2019_11_28_075402_add_radio_and_dropdown_and_checkbox_to_categories', 1),
+(18, '2019_11_29_050240_create_countries_table', 1),
+(19, '2019_12_05_101142_create_permission_tables', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `news`
+-- Table structure for table `model_has_permissions`
 --
 
-CREATE TABLE `news` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+CREATE TABLE `model_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_roles`
+--
+
+CREATE TABLE `model_has_roles` (
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -417,23 +423,16 @@ CREATE TABLE `news` (
 --
 
 CREATE TABLE `oauth_access_tokens` (
-  `id` varchar(100) COLLATE utf8_general_ci NOT NULL,
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) DEFAULT NULL,
   `client_id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_general_ci DEFAULT NULL,
-  `scopes` text COLLATE utf8_general_ci DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
   `revoked` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `expires_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oauth_access_tokens`
---
-
-INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes`, `revoked`, `created_at`, `updated_at`, `expires_at`) VALUES
-('4ee96355c9e77a10b552513290a065ff9bb7acc6f5430e6fa73ed48e9c7ec6ff77a43bda79225b51', 2, 1, 'Personal Access Token', '[]', 0, '2019-11-15 07:53:50', '2019-11-15 07:53:50', '2020-11-15 12:53:50');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -442,13 +441,13 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 --
 
 CREATE TABLE `oauth_auth_codes` (
-  `id` varchar(100) COLLATE utf8_general_ci NOT NULL,
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `client_id` int(10) UNSIGNED NOT NULL,
-  `scopes` text COLLATE utf8_general_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -459,23 +458,15 @@ CREATE TABLE `oauth_auth_codes` (
 CREATE TABLE `oauth_clients` (
   `id` int(10) UNSIGNED NOT NULL,
   `user_id` bigint(20) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `secret` varchar(100) COLLATE utf8_general_ci NOT NULL,
-  `redirect` text COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `personal_access_client` tinyint(1) NOT NULL,
   `password_client` tinyint(1) NOT NULL,
   `revoked` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oauth_clients`
---
-
-INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'Laravel Personal Access Client', 'mePXgXxMYGfh32tkok5jyGb28hIB1M98y0mfPCbR', 'http://localhost', 1, 0, 0, '2019-11-15 07:53:33', '2019-11-15 07:53:33'),
-(2, NULL, 'Laravel Password Grant Client', 'VMdMq6Vq388OiMgsmQVhHz1N9G7qjCje8UBj0bE9', 'http://localhost', 0, 1, 0, '2019-11-15 07:53:33', '2019-11-15 07:53:33');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -488,14 +479,7 @@ CREATE TABLE `oauth_personal_access_clients` (
   `client_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oauth_personal_access_clients`
---
-
-INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
-(1, 1, '2019-11-15 07:53:33', '2019-11-15 07:53:33');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -504,11 +488,11 @@ INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `u
 --
 
 CREATE TABLE `oauth_refresh_tokens` (
-  `id` varchar(100) COLLATE utf8_general_ci NOT NULL,
-  `access_token_id` varchar(100) COLLATE utf8_general_ci NOT NULL,
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -517,52 +501,49 @@ CREATE TABLE `oauth_refresh_tokens` (
 --
 
 CREATE TABLE `password_resets` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `email` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Table structure for table `permissions`
 --
 
-CREATE TABLE `products` (
+CREATE TABLE `permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `cat_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(45) COLLATE utf8_general_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `price` double(8,2) NOT NULL,
-  `description` mediumtext COLLATE utf8_general_ci NOT NULL,
-  `quantity` int(11) DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `cat_id`, `name`, `image`, `price`, `description`, `quantity`, `created_at`, `updated_at`) VALUES
-(24, 79, '1', '15045.png', 1.00, 'aa', 1, '2019-11-28 23:50:10', '2019-12-02 05:33:55'),
-(25, 79, 'a', '12189.png', 1.00, 'a', 1, '2019-12-02 05:49:28', '2019-12-02 05:49:28');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products_images`
+-- Table structure for table `roles`
 --
 
-CREATE TABLE `products_images` (
+CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `pro_id` bigint(20) UNSIGNED NOT NULL,
-  `image` varchar(255) COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_has_permissions`
+--
+
+CREATE TABLE `role_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -572,12 +553,12 @@ CREATE TABLE `products_images` (
 
 CREATE TABLE `settings` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `val` text COLLATE utf8_general_ci NOT NULL,
-  `type` char(20) COLLATE utf8_general_ci NOT NULL DEFAULT 'string',
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `val` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` char(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'string',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -587,26 +568,17 @@ CREATE TABLE `settings` (
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8_general_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8_general_ci DEFAULT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `avatar` varchar(255) COLLATE utf8_general_ci NOT NULL DEFAULT 'avatar.png',
-  `active` tinyint(1) NOT NULL DEFAULT 0,
-  `activation_token` varchar(255) COLLATE utf8_general_ci NOT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `avatar`, `active`, `activation_token`, `deleted_at`) VALUES
-(1, 'faiz', 'faiz@user.com1', NULL, '$2y$10$4gJqVj6vBW0N3MqwODmlPOEsZXQK8Gy9TM1h4Mvv7NWuJbChMd.vW', NULL, '2019-11-15 07:47:24', '2019-11-15 07:49:11', 'avatar.png', 1, '', NULL),
-(2, 'faiz', 'faiz@user.com', NULL, '$2y$10$XHUKqTl.Z0v3CawNx8bOCuXeEJHV9uU9lleHV8/CLLYFafZWaHvsu', NULL, '2019-11-15 07:50:27', '2019-11-15 08:08:24', 'avatar.png', 1, '', NULL);
+  `avatar` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'avatar.png',
+  `active` tinyint(1) NOT NULL DEFAULT '0',
+  `activation_token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -627,22 +599,21 @@ ALTER TABLE `admin_password_resets`
   ADD KEY `admin_password_resets_token_index` (`token`);
 
 --
+-- Indexes for table `ads`
+--
+ALTER TABLE `ads`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `country_id` (`country_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `countries`
 --
 ALTER TABLE `countries`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `ds`
---
-ALTER TABLE `ds`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -652,10 +623,18 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `news`
+-- Indexes for table `model_has_permissions`
 --
-ALTER TABLE `news`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `model_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
 
 --
 -- Indexes for table `oauth_access_tokens`
@@ -695,22 +674,26 @@ ALTER TABLE `oauth_refresh_tokens`
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `products`
+-- Indexes for table `permissions`
 --
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `products_cat_id_foreign` (`cat_id`);
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `products_images`
+-- Indexes for table `roles`
 --
-ALTER TABLE `products_images`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `products_images_pro_id_foreign` (`pro_id`);
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`role_id`),
+  ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
 
 --
 -- Indexes for table `settings`
@@ -733,13 +716,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `ads`
+--
+ALTER TABLE `ads`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `countries`
@@ -748,46 +737,34 @@ ALTER TABLE `countries`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=243;
 
 --
--- AUTO_INCREMENT for table `ds`
---
-ALTER TABLE `ds`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
-
---
--- AUTO_INCREMENT for table `news`
---
-ALTER TABLE `news`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
 --
 ALTER TABLE `oauth_clients`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `oauth_personal_access_clients`
 --
 ALTER TABLE `oauth_personal_access_clients`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT for table `permissions`
 --
-ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+ALTER TABLE `permissions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `products_images`
+-- AUTO_INCREMENT for table `roles`
 --
-ALTER TABLE `products_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+ALTER TABLE `roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -799,23 +776,30 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `products`
+-- Constraints for table `model_has_permissions`
 --
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_cat_id_foreign` FOREIGN KEY (`cat_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
+ALTER TABLE `model_has_permissions`
+  ADD CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `products_images`
+-- Constraints for table `model_has_roles`
 --
-ALTER TABLE `products_images`
-  ADD CONSTRAINT `products_images_pro_id_foreign` FOREIGN KEY (`pro_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+ALTER TABLE `model_has_roles`
+  ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
