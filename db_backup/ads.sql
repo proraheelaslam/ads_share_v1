@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 29, 2020 at 04:28 PM
+-- Generation Time: Apr 07, 2020 at 08:00 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -572,13 +572,21 @@ CREATE TABLE `users` (
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `points` decimal(10,0) NOT NULL DEFAULT '0',
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `avatar` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'avatar.png',
-  `active` tinyint(1) NOT NULL DEFAULT '0',
-  `activation_token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL
+  `active` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `points`, `remember_token`, `created_at`, `updated_at`, `active`) VALUES
+(1, 'Raheel', 'raheelaslam548@gmail.com', NULL, '$2y$10$ShiLqa/fL1Y/yccUL/E9xueXrJEVlx/RPZGTGh5o4s1KZIRprcT5e', '0', 'DesPgeik3DvwMb1zARsIKexEHcRJPvhaAmPaj5ilZdNHxqgiAfFDWSv9PPZj', '2020-04-03 12:10:57', '2020-04-03 12:12:41', 0),
+(2, 'Mudasir', 'mudassir@gmail.com', NULL, '$2y$10$C/tATX1PrIlCGTfPPrvpM.8C8Jow9rxAQ0Si8mznfjPuJ0071OxgG', '0', NULL, '2020-04-05 06:18:33', '2020-04-05 06:18:33', 0),
+(3, 'ali', 'ali@gmail.com', NULL, '$2y$10$Bmutl.hjpXObR00NYqPPT.4vVWTxuZOP9FQTgPt45pvne9aUM1.U2', '10000', NULL, '2020-04-05 06:20:41', '2020-04-05 06:20:41', 0);
 
 --
 -- Indexes for dumped tables
@@ -776,7 +784,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
