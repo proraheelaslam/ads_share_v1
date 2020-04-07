@@ -6,14 +6,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Storage;
+
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens, SoftDeletes;
+    use Notifiable, HasApiTokens;
 
-    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'active', 'activation_token', 'avatar'
+        'name', 'email', 'password','points'
     ];
 
     /**
@@ -30,7 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'activation_token'
+        'password', 'remember_token'
     ];
 
     /**
@@ -38,15 +36,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
-    protected $appends = ['avatar_url'];
 
-    public function getAvatarUrlAttribute()
-    {
-        return Storage::url('avatars/'.$this->id.'/'.$this->avatar);
-    }
     
 }

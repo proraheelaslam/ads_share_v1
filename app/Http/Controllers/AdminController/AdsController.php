@@ -55,6 +55,7 @@ class AdsController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         if($request->isMethod('post')){
             $this->validate($request, [
                 'name'        => 'required',

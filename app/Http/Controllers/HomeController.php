@@ -23,12 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //return view('layouts.frontLayout.app');
     }
 
 
     public function ads(){
 
-        return view('');
+        return view('frontend.ads.ads_list');
     }
 }
